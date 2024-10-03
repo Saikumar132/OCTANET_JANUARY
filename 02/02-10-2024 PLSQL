@@ -1,0 +1,258 @@
+Types of Cursors:
+2 Types:
+• Implicit Cursor
+Explicit Cursor
+○ Simple Cursor
+○ Ref Cursor
+•
+
+Implicit Cursor:
+To execute any DRL or DML command,
+ORACLE uses a cursor implicitly. This cursor
+is called "Implicit Cursor".
+•
+
+• Implicit Cursor name is: SQL
+Example:
+sql%found
+sql%notfound
+sql%rowcount
+sql%isopen
+
+Program to increase 2000 rupees salary to all emps:
+
+BEGIN
+UPDATE emp SET sal=sal+2000;
+dbms_output.put_line(SQL%ROWCOUNT || ' rows updated..');
+COMMIT;
+END;
+/
+
+CURSOR:
+CURSOR is a pointer to memory location which is
+INSTANCE.
+•
+
+oracle 2pm kphb pl sql Page 44
+
+INSTANCE.
+GOAL:
+• To hold multiple rows and process them one by one.
+4 steps:
+DECLARE
+OPEN
+FETCH
+CLOSE
+Cursor For loop:
+no need to open, fetch and close
+Inline cursor:
+if select query specified in cursor for loop
+ref cursor:
+same cursor can be used for multiple select queries
+parameterized cursor:
+cursor with parameters => c1(x INT)
+Types of cursors:
+2 types:
+implicit cursor => SQL
+explicit cursor
+simple cursor
+ref cursor
+
+oracle 2pm kphb pl sql Page 45
+
+SMITH 800
+ALLEN 1600
+WARD 1250
+
+c1
+
+BFR
+
+c1%found c1%notfound c1%rowcount c1%isopen
+FALSE TRUE
+
+FETCH c1 INTO v_ename, v_sal
+
+fetch v_ename
+ALLEN
+v_sal
+1600
+
+TRUE FALSE FALSE TRUE 0 1 2 3
+Monday, September 30, 2024 2:54 PM
+
+oracle 2pm kphb pl sql Page 46
+
+PROCEDURE:
+• PROCEDURE is one ORACLE DB OBJECT.
+• PROCEDURE is a named block of statements that gets
+executed on calling.
+• PROCEDURE can be also called as Sub Program.
+
+Types of Procedures:
+2 Types:
+• Stored Procedure
+• Packaged Procedure
+Stored Procedure:
+A procedure which is defined in SCHEMA [user]
+is called "Stored Procedure".
+Example:
+SCHEMA c##batch2pm
+PROCEDURE hike => Stored Procedure
+
+Packaged Procedure:
+A procedure which is defined in PACKAGE
+is called "Packaged Procedure".
+Example:
+SCHEMA c##batch2pm
+PACKAGE HR
+PROCEDURE hike => Packaged Procedure
+
+C => Function
+is a set of statements => calling
+Java => Method
+is a set of statements => calling
+
+PL/SQL => PROCEDURE
+FUNCTION
+is a set of statements => calling
+
+Syntax to define a Stored Procedure:
+
+CREATE [OR REPLACE] PROCEDURE <name>[(<parameter_list>)]
+IS / AS
+--declare the variables
+BEGIN
+--Statements
+END;
+/
+
+Example:
+Define a stored procedure to add 2 numbers:
+Stored Procedures
+Wednesday, October 2, 2024 2:24 PM
+
+oracle 2pm kphb pl sql Page 47
+
+CREATE OR REPLACE PROCEDURE
+addition(x NUMBER, y NUMBER)
+AS
+z NUMBER(4);
+BEGIN
+z := x+y;
+dbms_output.put_line('sum=' || z);
+END;
+/
+• Type above code in any text editor like notepad.
+• Save it in D: drive, batch2pm Folder, with the name
+ProcedureDemo.sql.
+• Open SQL PLUS.
+• Login as user.
+SQL> @d:\batch2pm\ProcedureDemo.sql
+Output:
+Procedure created.
+
+DB
+PROCEDURE addition
+--compiled code
+
+NOTE:
+PROCEDURE holds compiled code.
+When a procedure is called, ORACLE runs compiled code.
+It improves performance.
+
+calling Stored Procedure:
+3 ways:
+• From SQL prompt
+• From PL/SQL program
+• From Programming languages [Java, Python, C#]
+
+Calling From SQL prompt:
+Syntax:
+EXEC[UTE] <procedure_name>(<arguments>);
+Example:
+SQL> EXEC addition(5,4); --procedure call
+Output:
+sum=9
+
+Calling from PL/SQL program [main program]:
+DECLARE
+a NUMBER(4);
+b NUMBER(4);
+BEGIN
+a := &a;
+b := &b;
+addition(a,b); --procedure call
+END;
+/
+
+Note:
+CREATE OR REPLACE PROCEDURE
+addition(x NUMBER, y NUMBER)
+AS
+z NUMBER(4);
+BEGIN
+z := x+y;
+dbms_output.put_line('sum=' || z);
+END;
+/
+
+Procedure = Header + Body
+
+Procedure Header /
+Procedure Specififcation
+
+Procedure Body
+
+Parameter:
+A local variable which is declared in
+procedure header is called "Parameter".
+Syntax:
+<parameter_name> [<par_mode>] <par_data_type>
+Example:
+x IN NUMBER
+y OUT NUMBER
+z IN OUT NUMBER
+
+Parameter Modes:
+There are 3 parameter modes. They are:
+IN [default]
+Note:
+to see errors of a procedure:
+SQL> SHOW ERRORS
+
+oracle 2pm kphb pl sql Page 49
+
+• IN [default]
+• OUT
+• IN OUT
+
+IN:
+• It is default value.
+• IN parameter takes INPUT.
+• It is used to take input from out of procedure.
+• It brings value into procedure.
+• IN parameter is read-only parameter.
+• In Procedure call, IN parameter can be constant or
+variable.
+Example:
+CREATE OR REPLACE PROCEDURE
+addition(x IN NUMBER, y IN NUMBER)
+AS
+z NUMBER(4);
+BEGIN
+x := 500; --error: x is read-only parameter
+z := x+y;
+dbms_output.put_line('sum=' || z);
+END;
+/
+
+OUT:
+• OUT parameter sends output [result].
+• OUT parameter is used to send result out of the procedure.
+• It is read-write parameter.
+• In procedure call, it must be variable only.
+IN OUT:
+• Same parameter takes input and sends output.
+• It is read-write parameter.
+• In procedure call, it must be variable only.
